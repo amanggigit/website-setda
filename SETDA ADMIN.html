@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Sekretariat Daerah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .sidebar-nav {
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+        
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #059669;
+        }
+        
+        .btn-secondary {
+            background-color: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #f3f4f6;
+        }
+        
+        .card-header {
+            padding: 1.5rem 1.5rem 0 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background-color: #10b981;
+        }
+        
+        .notification.error {
+            background-color: #ef4444;
+        }
+        
+        .notification.info {
+            background-color: #3b82f6;
+        }
+        
+        .color-picker-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .color-picker {
+            width: 3rem;
+            height: 2.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            background: none;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+        
+        .menu-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            cursor: move;
+            transition: all 0.2s;
+        }
+        
+        .menu-item:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+        
+        .preview-modal {
+            backdrop-filter: blur(4px);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .section-divider {
+            border-bottom: 1px solid #f3f4f6;
+            margin: 2rem 0;
+            padding-bottom: 2rem;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 3rem;
+            height: 1.5rem;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 1.5rem;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 1.125rem;
+            width: 1.125rem;
+            left: 0.1875rem;
+            bottom: 0.1875rem;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #3b82f6;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(1.5rem);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-cog text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">Admin Panel</h1>
+                            <p class="text-sm text-gray-500">Sekretariat Daerah</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <button onclick="previewChanges()" class="btn btn-success">
+                        <i class="fas fa-eye mr-2"></i>
+                        Preview
+                    </button>
+                    <button onclick="saveSettings()" class="btn btn-primary" id="save-btn">
+                        <i class="fas fa-save mr-2"></i>
+                        Simpan
+                    </button>
+                    <div class="relative">
+                        <button onclick="toggleDropdown()" class="btn btn-secondary">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden">
+                            <a href="#" onclick="exportSettings()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                <i class="fas fa-download mr-2"></i>Export Settings
+                            </a>
+                            <a href="#" onclick="importSettings()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                <i class="fas fa-upload mr-2"></i>Import Settings
+                            </a>
+                            <hr class="my-1">
+                            <a href="index.html" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                <i class="fas fa-external-link-alt mr-2"></i>Lihat Website
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <nav class="sidebar-nav card card-body">
+                    <h2 class="text-lg font-bold text-gray-900 mb-6">Pengaturan</h2>
+                    <div class="space-y-1">
+                        <button onclick="showTab('general')" class="tab-btn w-full text-left px-4 py-3 rounded-lg bg-blue-50 text-blue-700 font-medium flex items-center">
+                            <i class="fas fa-building mr-3"></i>
+                            Umum
+                        </button>
+                        <button onclick="showTab('header')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center">
+                            <i class="fas fa-header mr-3"></i>
+                            Header
+                        </button>
+                        <button onclick="showTab('navigation')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center">
+                            <i class="fas fa-bars mr-3"></i>
+                            Navigasi
+                        </button>
+                        <button onclick="showTab('hero')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center">
+                            <i class="fas fa-star mr-3"></i>
+                            Hero Section
+                        </button>
+                        <button onclick="showTab('content')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center">
+                            <i class="fas fa-file-alt mr-3"></i>
+                            Konten
+                        </button>
+                        <button onclick="showTab('footer')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center">
+                            <i class="fas fa-grip-lines mr-3"></i>
+                            Footer
+                        </button>
+                        <button onclick="showTab('appearance')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center">
+                            <i class="fas fa-palette mr-3"></i>
+                            Tampilan
+                        </button>
+                        <button onclick="showTab('media')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center">
+                            <i class="fas fa-images mr-3"></i>
+                            Media
+                        </button>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <!-- Tab: Pengaturan Umum -->
+                <div id="tab-general" class="tab-content active card">
+                    <div class="card-header">
+                        <h2 class="text-2xl font-bold text-gray-900">Pengaturan Umum</h2>
+                        <p class="text-gray-600 mt-1">Konfigurasi dasar website dan informasi instansi</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="form-label">Nama Instansi</label>
+                                <input type="text" id="instansi-name" value="Sekretariat Daerah" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Nama Kabupaten/Kota</label>
+                                <input type="text" id="kabupaten-name" value="[Nama Kabupaten]" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="form-label">Nomor Telepon</label>
+                                <input type="tel" id="phone" value="(021) 123-4567" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Resmi</label>
+                                <input type="email" id="email" value="sekda@kabupaten.go.id" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Alamat Lengkap</label>
+                            <textarea id="address" rows="3" class="form-input">Jl. Pemerintahan No. 1, Kabupaten [Nama Kabupaten]</textarea>
+                        </div>
+
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">SEO & Meta</h3>
+                            <div class="form-group">
+                                <label class="form-label">Meta Description</label>
+                                <textarea id="meta-description" rows="2" class="form-input" placeholder="Deskripsi singkat website untuk mesin pencari">Website resmi Sekretariat Daerah Kabupaten - Melayani dengan transparansi dan akuntabilitas</textarea>
+                                <p class="text-sm text-gray-500 mt-1">Maksimal 160 karakter untuk hasil pencarian yang optimal</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-info-circle text-blue-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-blue-900">Tips Pengaturan</h4>
+                                    <p class="text-sm text-blue-700 mt-1">Pastikan semua informasi sudah benar sebelum menyimpan. Perubahan akan langsung terlihat di website.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Header -->
+                <div id="tab-header" class="tab-content card">
+                    <div class="card-header">
+                        <h2 class="text-2xl font-bold text-gray-900">Pengaturan Header</h2>
+                        <p class="text-gray-600 mt-1">Kustomisasi tampilan header dan logo website</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="form-label">Logo/Icon Header</label>
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                                    <div class="text-4xl mb-3">🏛️</div>
+                                    <p class="text-sm text-gray-600 mb-3">Logo saat ini</p>
+                                    <input type="file" id="header-logo" accept="image/*" class="hidden">
+                                    <button onclick="document.getElementById('header-logo').click()" class="btn btn-primary">
+                                        <i class="fas fa-upload mr-2"></i>
+                                        Upload Logo
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Teks Header</label>
+                                <input type="text" id="header-text" value="PEMERINTAH KABUPATEN" class="form-input">
+                                
+                                <label class="form-label mt-4">Tinggi Header</label>
+                                <div class="space-y-2">
+                                    <input type="range" id="header-height" min="60" max="200" value="96" class="w-full">
+                                    <div class="flex justify-between text-sm text-gray-500">
+                                        <span>60px</span>
+                                        <span id="header-height-value" class="font-medium text-blue-600">96px</span>
+                                        <span>200px</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Perilaku Header</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <h4 class="font-medium text-gray-900">Header Sticky</h4>
+                                        <p class="text-sm text-gray-600">Header akan tetap terlihat saat scroll</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="header-sticky" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <h4 class="font-medium text-gray-900">Shadow Effect</h4>
+                                        <p class="text-sm text-gray-600">Tambahkan bayangan di bawah header</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="header-shadow" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Navigation -->
+                <div id="tab-navigation" class="tab-content card">
+                    <div class="card-header">
+                        <h2 class="text-2xl font-bold text-gray-900">Pengaturan Navigasi</h2>
+                        <p class="text-gray-600 mt-1">Kelola menu dan struktur navigasi website</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+                            <div class="flex items-start">
+                                <i class="fas fa-lightbulb text-amber-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-amber-900">Tips Navigasi</h4>
+                                    <p class="text-sm text-amber-700 mt-1">Drag & drop untuk mengubah urutan menu. Gunakan toggle untuk mengaktifkan/menonaktifkan menu.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="menu-list" class="space-y-3">
+                            <div class="menu-item" draggable="true">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <i class="fas fa-grip-vertical text-gray-400 cursor-move"></i>
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">BERANDA</h4>
+                                            <p class="text-sm text-gray-500">Halaman utama website</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <button class="text-blue-600 hover:text-blue-800 p-2">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="menu-item" draggable="true">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <i class="fas fa-grip-vertical text-gray-400 cursor-move"></i>
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">PROFIL</h4>
+                                            <p class="text-sm text-gray-500">8 submenu tersedia</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <button class="text-blue-600 hover:text-blue-800 p-2">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="menu-item" draggable="true">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <i class="fas fa-grip-vertical text-gray-400 cursor-move"></i>
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">LAYANAN</h4>
+                                            <p class="text-sm text-gray-500">2 submenu tersedia</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <button class="text-blue-600 hover:text-blue-800 p-2">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="w-full mt-6 border-2 border-dashed border-gray-300 rounded-lg p-6 text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>
+                            Tambah Menu Baru
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab: Hero Section -->
+                <div id="tab-hero" class="tab-content card">
+                    <div class="card-header">
+                        <h2 class="text-2xl font-bold text-gray-900">Hero Section</h2>
+                        <p class="text-gray-600 mt-1">Bagian utama yang pertama dilihat pengunjung</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="form-label">Judul Utama</label>
+                                <input type="text" id="hero-title1" value="Selamat Datang di" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Judul Kedua</label>
+                                <input type="text" id="hero-title2" value="Sekretariat Daerah Kabupaten" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Deskripsi</label>
+                            <textarea id="hero-description" rows="3" class="form-input">Melayani dengan integritas, transparansi, dan akuntabilitas untuk kemajuan daerah dan kesejahteraan masyarakat</textarea>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="form-label">Tombol Pertama</label>
+                                <input type="text" id="hero-btn1" value="Layanan Publik" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Tombol Kedua</label>
+                                <input type="text" id="hero-btn2" value="Informasi PPID" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Background Hero</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="hero-bg" value="gradient" checked class="sr-only peer">
+                                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-24 rounded-lg border-4 border-transparent peer-checked:border-blue-800 flex items-center justify-center text-white font-medium transition-all hover:scale-105">
+                                        <div class="text-center">
+                                            <i class="fas fa-paint-brush text-2xl mb-2"></i>
+                                            <p class="text-sm">Gradient</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="hero-bg" value="solid" class="sr-only peer">
+                                    <div class="bg-blue-600 h-24 rounded-lg border-4 border-transparent peer-checked:border-blue-800 flex items-center justify-center text-white font-medium transition-all hover:scale-105">
+                                        <div class="text-center">
+                                            <i class="fas fa-square text-2xl mb-2"></i>
+                                            <p class="text-sm">Solid</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="hero-bg" value="image" class="sr-only peer">
+                                    <div class="bg-gray-300 h-24 rounded-lg border-4 border-transparent peer-checked:border-blue-800 flex items-center justify-center text-gray-600 font-medium transition-all hover:scale-105">
+                                        <div class="text-center">
+                                            <i class="fas fa-image text-2xl mb-2"></i>
+                                            <p class="text-sm">Image</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Content -->
+                <div id="tab-content" class="tab-content card">
+                    <div class="card-header">
+                        <h2 class="text-2xl font-bold text-gray-900">Pengaturan Konten</h2>
+                        <p class="text-gray-600 mt-1">Kelola konten utama website</p>
+                    </div>
+                    <div class="card-body">
+                        <!-- Visi Misi -->
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                                <i class="fas fa-bullseye mr-2 text-blue-600"></i>
+                                Visi & Misi
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="form-group">
+                                    <label class="form-label">Visi</label>
+                                    <textarea id="visi-text" rows="3" class="form-input">"Terwujudnya Kabupaten yang Maju, Sejahtera, dan Berkelanjutan melalui Tata Kelola Pemerintahan yang Baik, Bersih, dan Melayani"</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Misi</label>
+                                    <textarea id="misi-text" rows="6" class="form-input">Meningkatkan kualitas pelayanan publik yang prima dan berorientasi pada kepuasan masyarakat
+Mewujudkan tata kelola pemerintahan yang transparan, akuntabel, dan partisipatif
+Mengoptimalkan koordinasi dan sinkronisasi program pembangunan daerah
+Meningkatkan kapasitas aparatur sipil negara yang profesional dan berintegritas</textarea>
+                                    <p class="text-sm text-gray-500 mt-1">Pisahkan setiap poin misi dengan enter</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Statistik -->
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                                <i class="fas fa-chart-bar mr-2 text-green-600"></i>
+                                Statistik Layanan
+                            </h3>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <i class="fas fa-file-alt text-3xl mb-3"></i>
+                                    <input type="text" id="stat-permohonan" value="1,247" class="bg-transparent border-0 text-center text-2xl font-bold text-white w-full">
+                                    <p class="text-sm opacity-90">Permohonan Informasi</p>
+                                </div>
+                                <div class="stat-card">
+                                    <i class="fas fa-smile text-3xl mb-3"></i>
+                                    <input type="text" id="stat-kepuasan" value="98%" class="bg-transparent border-0 text-center text-2xl font-bold text-white w-full">
+                                    <p class="text-sm opacity-90">Tingkat Kepuasan</p>
+                                </div>
+                                <div class="stat-card">
+                                    <i class="fas fa-folder text-3xl mb-3"></i>
+                                    <input type="text" id="stat-dokumen" value="156" class="bg-transparent border-0 text-center text-2xl font-bold text-white w-full">
+                                    <p class="text-sm opacity-90">Dokumen Publik</p>
+                                </div>
+                                <div class="stat-card">
+                                    <i class="fas fa-clock text-3xl mb-3"></i>
+                                    <input type="text" id="stat-layanan" value="24/7" class="bg-transparent border-0 text-center text-2xl font-bold text-white w-full">
+                                    <p class="text-sm opacity-90">Layanan Online</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Berita -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                                <i class="fas fa-newspaper mr-2 text-red-600"></i>
+                                Berita & Pengumuman
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <h4 class="font-medium text-gray-900">Berita Terbaru</h4>
+                                        <button class="text-red-600 hover:text-red-800 p-1">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" placeholder="Judul berita" value="Pelaksanaan Rapat Koordinasi Bulanan" class="form-input mb-3">
+                                    <textarea placeholder="Isi berita" rows="3" class="form-input">Rapat koordinasi rutin bulan ini akan dilaksanakan pada tanggal 15 dengan agenda pembahasan program kerja...</textarea>
+                                </div>
+                                <button class="w-full border-2 border-dashed border-gray-300 rounded-lg p-6 text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors">
+                                    <i class="fas fa-plus mr-2"></i>
+                                    Tambah Berita Baru
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Footer -->
+                <div id="tab-footer" class="tab-content card">
+                    <div class="card-header">
+                        <h2 class="text-2xl font-bold text-gray-900">Pengaturan Footer</h2>
+                        <p class="text-gray-600 mt-1">Konfigurasi bagian bawah website</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Copyright Text</label>
+                            <input type="text" id="copyright-text" value="© 2024 Sekretariat Daerah Kabupaten. Semua hak dilindungi undang-undang." class="form-input">
+                        </div>
+
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Media Sosial</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fab fa-facebook text-blue-600 mr-2"></i>
+                                        Facebook
+                                    </label>
+                                    <input type="url" id="facebook-link" placeholder="https://facebook.com/..." class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fab fa-twitter text-blue-400 mr-2"></i>
+                                        Twitter
+                                    </label>
+                                    <input type="url" id="twitter-link" placeholder="https://twitter.com/..." class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fab fa-youtube text-red-600 mr-2"></i>
+                                        YouTube
+                                    </label>
+                                    <input type="url" id="youtube-link" placeholder="https://youtube.com/..." class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fab fa-instagram text-pink-600 mr-2"></i>
+                                        Instagram
+                                    </label>
+                                    <input type="url" id="instagram-link" placeholder="https://instagram.com/..." class="form-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                                <h4 class="font-medium text-gray-900">Tampilkan Footer</h4>
+                                <p class="text-sm text-gray-600">Aktifkan/nonaktifkan footer di website</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="show-footer" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Appearance -->
+                <div id="tab-appearance" class="tab-content card">
+                    <div class="card-header">
+                        <h2 class="text-2xl font-bold text-gray-900">Pengaturan Tampilan</h2>
+                        <p class="text-gray-600 mt-1">Kustomisasi warna, font, dan style website</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Skema Warna</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label class="form-label">Warna Primer</label>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="color-picker-wrapper">
+                                            <input type="color" id="primary-color" value="#3b82f6" class="color-picker">
+                                        </div>
+                                        <input type="text" value="#3b82f6" class="form-input flex-1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Warna Sekunder</label>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="color-picker-wrapper">
+                                            <input type="color" id="secondary-color" value="#1e40af" class="color-picker">
+                                        </div>
+                                        <input type="text" value="#1e40af" class="form-input flex-1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Warna Aksen</label>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="color-picker-wrapper">
+                                            <input type="color" id="accent-color" value="#10b981" class="color-picker">
+                                        </div>
+                                        <input type="text" value="#10b981" class="form-input flex-1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Warna Background</label>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="color-picker-wrapper">
+                                            <input type="color" id="bg-color" value="#f9fafb" class="color-picker">
+                                        </div>
+                                        <input type="text" value="#f9fafb" class="form-input flex-1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Typography</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label class="form-label">Font Family</label>
+                                    <select id="font-family" class="form-input">
+                                        <option value="system">System Default</option>
+                                        <option value="inter">Inter</option>
+                                        <option value="roboto">Roboto</option>
+                                        <option value="open-sans">Open Sans</option>
+                                        <option value="lato">Lato</option>
+                                        <option value="poppins">Poppins</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Border Radius</label>
+                                    <div class="space-y-2">
+                                        <input type="range" id="border-radius" min="0" max="20" value="8" class="w-full">
+                                        <div class="flex justify-between text-sm text-gray-500">
+                                            <span>0px (Kotak)</span>
+                                            <span id="border-radius-value" class="font-medium text-blue-600">8px</span>
+                                            <span>20px (Bulat)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h4 class="font-medium text-gray-900 mb-4">Preview Warna</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="text-center">
+                                    <div class="h-16 bg-blue-600 rounded-lg mb-2 shadow-sm"></div>
+                                    <p class="text-sm font-medium text-gray-700">Primer</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="h-16 bg-blue-800 rounded-lg mb-2 shadow-sm"></div>
+                                    <p class="text-sm font-medium text-gray-700">Sekunder</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="h-16 bg-green-500 rounded-lg mb-2 shadow-sm"></div>
+                                    <p class="text-sm font-medium text-gray-700">Aksen</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="h-16 bg-gray-100 rounded-lg mb-2 shadow-sm border"></div>
+                                    <p class="text-sm font-medium text-gray-700">Background</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Media -->
+                <div id="tab-media" class="tab-content card">
+                    <div class="card-header">
+                        <h2 class="text-2xl font-bold text-gray-900">Pengaturan Media</h2>
+                        <p class="text-gray-600 mt-1">Kelola gambar, logo, dan media lainnya</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Logo & Branding</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="text-center">
+                                    <label class="form-label">Logo Utama</label>
+                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 hover:border-blue-400 transition-colors">
+                                        <div class="text-6xl mb-4">🏛️</div>
+                                        <p class="text-sm text-gray-600 mb-4">Logo saat ini (Emoji)</p>
+                                        <input type="file" id="main-logo" accept="image/*" class="hidden">
+                                        <button onclick="document.getElementById('main-logo').click()" class="btn btn-primary">
+                                            <i class="fas fa-upload mr-2"></i>
+                                            Upload Logo Baru
+                                        </button>
+                                        <p class="text-xs text-gray-500 mt-2">Rekomendasi: PNG/SVG, 200x200px</p>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <label class="form-label">Favicon</label>
+                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 hover:border-blue-400 transition-colors">
+                                        <div class="text-4xl mb-4">🏛️</div>
+                                        <p class="text-sm text-gray-600 mb-4">Favicon saat ini</p>
+                                        <input type="file" id="favicon" accept="image/*" class="hidden">
+                                        <button onclick="document.getElementById('favicon').click()" class="btn btn-primary">
+                                            <i class="fas fa-upload mr-2"></i>
+                                            Upload Favicon
+                                        </button>
+                                        <p class="text-xs text-gray-500 mt-2">Rekomendasi: ICO/PNG, 32x32px</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Galeri Banner</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <h4 class="font-medium text-gray-900">Rapat Koordinasi</h4>
+                                            <div class="flex space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 p-1">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-800 p-1">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gradient-to-br from-blue-400 to-blue-600 h-32 rounded-lg flex items-center justify-center text-white">
+                                            <div class="text-center">
+                                                <i class="fas fa-users text-3xl mb-2"></i>
+                                                <p class="text-sm font-medium">Rapat Koordinasi</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <h4 class="font-medium text-gray-900">Kunjungan Kerja</h4>
+                                            <div class="flex space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 p-1">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-800 p-1">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gradient-to-br from-green-400 to-green-600 h-32 rounded-lg flex items-center justify-center text-white">
+                                            <div class="text-center">
+                                                <i class="fas fa-handshake text-3xl mb-2"></i>
+                                                <p class="text-sm font-medium">Kunjungan Kerja</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <h4 class="font-medium text-gray-900">Upacara Resmi</h4>
+                                            <div class="flex space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 p-1">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-800 p-1">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gradient-to-br from-purple-400 to-purple-600 h-32 rounded-lg flex items-center justify-center text-white">
+                                            <div class="text-center">
+                                                <i class="fas fa-flag text-3xl mb-2"></i>
+                                                <p class="text-sm font-medium">Upacara Resmi</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <h4 class="font-medium text-gray-900">Pembangunan</h4>
+                                            <div class="flex space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 p-1">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-800 p-1">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gradient-to-br from-orange-400 to-orange-600 h-32 rounded-lg flex items-center justify-center text-white">
+                                            <div class="text-center">
+                                                <i class="fas fa-hammer text-3xl mb-2"></i>
+                                                <p class="text-sm font-medium">Pembangunan</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="w-full mt-6 border-2 border-dashed border-gray-300 rounded-lg p-6 text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors">
+                                <i class="fas fa-plus mr-2"></i>
+                                Tambah Banner Baru
+                            </button>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Pengaturan Media</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <h4 class="font-medium text-gray-900">Kompresi Otomatis</h4>
+                                        <p class="text-sm text-gray-600">Kompres gambar untuk loading lebih cepat</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <h4 class="font-medium text-gray-900">Lazy Loading</h4>
+                                        <p class="text-sm text-gray-600">Muat gambar hanya saat diperlukan</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="preview-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden preview-modal">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden">
+                <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-eye text-blue-600 text-xl"></i>
+                        <h3 class="text-xl font-bold text-gray-900">Preview Website</h3>
+                    </div>
+                    <button onclick="closePreview()" class="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="p-6 overflow-auto max-h-[calc(90vh-80px)]">
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <iframe id="preview-iframe" src="index.html" class="w-full h-96 border-0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let autoSaveTimeout;
+        let isLoading = false;
+
+        // Tab Management
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-50', 'text-blue-700');
+                btn.classList.add('hover:bg-gray-50', 'text-gray-700');
+            });
+            
+            // Show selected tab
+            document.getElementById('tab-' + tabId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.remove('hover:bg-gray-50', 'text-gray-700');
+            event.target.classList.add('bg-blue-50', 'text-blue-700');
+        }
+
+        // Range Sliders
+        function initializeRangeSliders() {
+            const headerHeight = document.getElementById('header-height');
+            const borderRadius = document.getElementById('border-radius');
+
+            headerHeight.addEventListener('input', function() {
+                document.getElementById('header-height-value').textContent = this.value + 'px';
+            });
+
+            borderRadius.addEventListener('input', function() {
+                document.getElementById('border-radius-value').textContent = this.value + 'px';
+            });
+        }
+
+        // Color Pickers
+        function initializeColorPickers() {
+            document.querySelectorAll('input[type="color"]').forEach(colorPicker => {
+                colorPicker.addEventListener('change', function() {
+                    const textInput = this.parentElement.parentElement.querySelector('input[type="text"]');
+                    if (textInput) {
+                        textInput.value = this.value;
+                    }
+                    updateColorPreview();
+                });
+            });
+        }
+
+        // Update color preview
+        function updateColorPreview() {
+            const primary = document.getElementById('primary-color').value;
+            const secondary = document.getElementById('secondary-color').value;
+            const accent = document.getElementById('accent-color').value;
+            const bg = document.getElementById('bg-color').value;
+
+            const previewCards = document.querySelectorAll('.bg-blue-600, .bg-blue-800, .bg-green-500, .bg-gray-100');
+            if (previewCards.length >= 4) {
+                previewCards[0].style.backgroundColor = primary;
+                previewCards[1].style.backgroundColor = secondary;
+                previewCards[2].style.backgroundColor = accent;
+                previewCards[3].style.backgroundColor = bg;
+            }
+        }
+
+        // Dropdown menu
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdown-menu');
+            const button = event.target.closest('button');
+            
+            if (!button || !button.onclick || button.onclick.toString().indexOf('toggleDropdown') === -1) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Preview Functions
+        function previewChanges() {
+            document.getElementById('preview-modal').classList.remove('hidden');
+            updatePreview();
+        }
+
+        function closePreview() {
+            document.getElementById('preview-modal').classList.add('hidden');
+        }
+
+        function updatePreview() {
+            const iframe = document.getElementById('preview-iframe');
+            iframe.src = iframe.src; // Reload iframe
+        }
+
+        // Save Settings
+        function saveSettings() {
+            if (isLoading) return;
+            
+            isLoading = true;
+            const saveBtn = document.getElementById('save-btn');
+            const originalText = saveBtn.innerHTML;
+            
+            saveBtn.innerHTML = '<div class="loading mr-2"></div>Menyimpan...';
+            saveBtn.disabled = true;
+
+            const settings = {
+                general: {
+                    instansiName: document.getElementById('instansi-name').value,
+                    kabupatenName: document.getElementById('kabupaten-name').value,
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    address: document.getElementById('address').value,
+                    metaDescription: document.getElementById('meta-description').value
+                },
+                header: {
+                    text: document.getElementById('header-text').value,
+                    height: document.getElementById('header-height').value,
+                    sticky: document.getElementById('header-sticky').checked,
+                    shadow: document.getElementById('header-shadow').checked
+                },
+                hero: {
+                    title1: document.getElementById('hero-title1').value,
+                    title2: document.getElementById('hero-title2').value,
+                    description: document.getElementById('hero-description').value,
+                    btn1: document.getElementById('hero-btn1').value,
+                    btn2: document.getElementById('hero-btn2').value,
+                    background: document.querySelector('input[name="hero-bg"]:checked').value
+                },
+                content: {
+                    visi: document.getElementById('visi-text').value,
+                    misi: document.getElementById('misi-text').value,
+                    statistics: {
+                        permohonan: document.getElementById('stat-permohonan').value,
+                        kepuasan: document.getElementById('stat-kepuasan').value,
+                        dokumen: document.getElementById('stat-dokumen').value,
+                        layanan: document.getElementById('stat-layanan').value
+                    }
+                },
+                footer: {
+                    copyright: document.getElementById('copyright-text').value,
+                    facebook: document.getElementById('facebook-link').value,
+                    twitter: document.getElementById('twitter-link').value,
+                    youtube: document.getElementById('youtube-link').value,
+                    instagram: document.getElementById('instagram-link').value,
+                    show: document.getElementById('show-footer').checked
+                },
+                appearance: {
+                    primary: document.getElementById('primary-color').value,
+                    secondary: document.getElementById('secondary-color').value,
+                    accent: document.getElementById('accent-color').value,
+                    background: document.getElementById('bg-color').value,
+                    fontFamily: document.getElementById('font-family').value,
+                    borderRadius: document.getElementById('border-radius').value
+                },
+                timestamp: new Date().toISOString()
+            };
+
+            // Simulate API call
+            setTimeout(() => {
+                localStorage.setItem('sekda-settings', JSON.stringify(settings));
+                showNotification('Pengaturan berhasil disimpan!', 'success');
+                
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+                isLoading = false;
+            }, 1000);
+        }
+
+        // Load Settings
+        function loadSettings() {
+            const saved = localStorage.getItem('sekda-settings');
+            if (saved) {
+                try {
+                    const settings = JSON.parse(saved);
+                    
+                    // Load general settings
+                    if (settings.general) {
+                        document.getElementById('instansi-name').value = settings.general.instansiName || '';
+                        document.getElementById('kabupaten-name').value = settings.general.kabupatenName || '';
+                        document.getElementById('phone').value = settings.general.phone || '';
+                        document.getElementById('email').value = settings.general.email || '';
+                        document.getElementById('address').value = settings.general.address || '';
+                        document.getElementById('meta-description').value = settings.general.metaDescription || '';
+                    }
+                    
+                    // Load header settings
+                    if (settings.header) {
+                        document.getElementById('header-text').value = settings.header.text || '';
+                        document.getElementById('header-height').value = settings.header.height || 96;
+                        document.getElementById('header-sticky').checked = settings.header.sticky !== false;
+                        document.getElementById('header-shadow').checked = settings.header.shadow !== false;
+                    }
+                    
+                    // Load other settings...
+                    updateColorPreview();
+                    showNotification('Pengaturan berhasil dimuat', 'info');
+                } catch (error) {
+                    showNotification('Error memuat pengaturan', 'error');
+                }
+            }
+        }
+
+        // Notification System
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = type === 'success' ? 'fas fa-check-circle' : 
+                        type === 'error' ? 'fas fa-exclamation-circle' : 
+                        'fas fa-info-circle';
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="${icon} mr-3"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Hide notification
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Drag and Drop for Menu Items
+        function initializeDragAndDrop() {
+            let draggedElement = null;
+
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('dragstart', function(e) {
+                    draggedElement = this;
+                    this.classList.add('dragging');
+                });
+
+                item.addEventListener('dragend', function(e) {
+                    this.classList.remove('dragging');
+                    draggedElement = null;
+                });
+
+                item.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+
+                item.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    if (draggedElement !== this) {
+                        const parent = this.parentNode;
+                        const draggedIndex = Array.from(parent.children).indexOf(draggedElement);
+                        const targetIndex = Array.from(parent.children).indexOf(this);
+                        
+                        if (draggedIndex < targetIndex) {
+                            parent.insertBefore(draggedElement, this.nextSibling);
+                        } else {
+                            parent.insertBefore(draggedElement, this);
+                        }
+                        
+                        showNotification('Urutan menu berhasil diubah', 'success');
+                    }
+                });
+            });
+        }
+
+        // Export/Import Settings
+        function exportSettings() {
+            const settings = localStorage.getItem('sekda-settings');
+            if (settings) {
+                const blob = new Blob([settings], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `sekda-settings-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                showNotification('Pengaturan berhasil diekspor', 'success');
+            } else {
+                showNotification('Tidak ada pengaturan untuk diekspor', 'error');
+            }
+        }
+
+        function importSettings() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const settings = JSON.parse(e.target.result);
+                            localStorage.setItem('sekda-settings', JSON.stringify(settings));
+                            loadSettings();
+                            showNotification('Pengaturan berhasil diimpor!', 'success');
+                        } catch (error) {
+                            showNotification('File tidak valid!', 'error');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+
+        // Auto-save functionality
+        function initializeAutoSave() {
+            document.addEventListener('input', function(e) {
+                if (e.target.matches('input, textarea, select')) {
+                    clearTimeout(autoSaveTimeout);
+                    autoSaveTimeout = setTimeout(() => {
+                        saveSettings();
+                    }, 2000);
+                }
+            });
+
+            document.addEventListener('change', function(e) {
+                if (e.target.matches('input[type="checkbox"], input[type="radio"]')) {
+                    clearTimeout(autoSaveTimeout);
+                    autoSaveTimeout = setTimeout(() => {
+                        saveSettings();
+                    }, 1000);
+                }
+            });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeRangeSliders();
+            initializeColorPickers();
+            initializeDragAndDrop();
+            initializeAutoSave();
+            loadSettings();
+            
+            // Show welcome message
+            setTimeout(() => {
+                showNotification('Selamat datang di Admin Panel!', 'info');
+            }, 500);
+        });
+
+        // Handle page visibility for auto-save
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                clearTimeout(autoSaveTimeout);
+                saveSettings();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985fb46c92f49cd6',t:'MTc1OTAyNTQzMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

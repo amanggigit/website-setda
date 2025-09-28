@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sekretariat Daerah Kabupaten</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .dropdown-menu {
+            display: none;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .page-content {
+            display: none;
+        }
+        .page-content.active {
+            display: block;
+        }
+        .breadcrumb {
+            background: linear-gradient(90deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header Image -->
+    <div class="bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100 h-24 overflow-hidden relative">
+        <svg viewBox="0 0 1200 120" class="w-full h-full">
+            <!-- Sky background -->
+            <rect width="1200" height="120" fill="url(#skyGradient)"/>
+            
+            <!-- Mountains background -->
+            <polygon points="0,80 200,60 400,70 600,55 800,65 1000,50 1200,60 1200,120 0,120" fill="#e2e8f0" opacity="0.6"/>
+            
+            <!-- Government building complex -->
+            <!-- Main building (center) -->
+            <rect x="500" y="30" width="200" height="90" fill="#1e40af" stroke="#1e3a8a" stroke-width="1"/>
+            <rect x="520" y="40" width="20" height="30" fill="#3b82f6"/>
+            <rect x="550" y="40" width="20" height="30" fill="#3b82f6"/>
+            <rect x="580" y="40" width="20" height="30" fill="#3b82f6"/>
+            <rect x="610" y="40" width="20" height="30" fill="#3b82f6"/>
+            <rect x="640" y="40" width="20" height="30" fill="#3b82f6"/>
+            <rect x="660" y="40" width="20" height="30" fill="#3b82f6"/>
+            
+            <!-- Main entrance -->
+            <rect x="580" y="80" width="40" height="40" fill="#1e3a8a"/>
+            <rect x="585" y="85" width="30" height="35" fill="#60a5fa"/>
+            
+            <!-- Flag pole -->
+            <rect x="595" y="10" width="2" height="20" fill="#374151"/>
+            <rect x="597" y="12" width="15" height="8" fill="#dc2626"/>
+            
+            <!-- Left wing building -->
+            <rect x="300" y="50" width="180" height="70" fill="#2563eb" stroke="#1e40af" stroke-width="1"/>
+            <rect x="320" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="345" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="370" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="395" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="420" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="445" y="60" width="15" height="25" fill="#60a5fa"/>
+            
+            <!-- Right wing building -->
+            <rect x="720" y="50" width="180" height="70" fill="#2563eb" stroke="#1e40af" stroke-width="1"/>
+            <rect x="740" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="765" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="790" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="815" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="840" y="60" width="15" height="25" fill="#60a5fa"/>
+            <rect x="865" y="60" width="15" height="25" fill="#60a5fa"/>
+            
+            <!-- Additional smaller buildings -->
+            <rect x="150" y="70" width="120" height="50" fill="#3b82f6" stroke="#2563eb" stroke-width="1"/>
+            <rect x="165" y="80" width="12" height="20" fill="#93c5fd"/>
+            <rect x="185" y="80" width="12" height="20" fill="#93c5fd"/>
+            <rect x="205" y="80" width="12" height="20" fill="#93c5fd"/>
+            <rect x="225" y="80" width="12" height="20" fill="#93c5fd"/>
+            <rect x="245" y="80" width="12" height="20" fill="#93c5fd"/>
+            
+            <rect x="930" y="70" width="120" height="50" fill="#3b82f6" stroke="#2563eb" stroke-width="1"/>
+            <rect x="945" y="80" width="12" height="20" fill="#93c5fd"/>
+            <rect x="965" y="80" width="12" height="20" fill="#93c5fd"/>
+            <rect x="985" y="80" width="12" height="20" fill="#93c5fd"/>
+            <rect x="1005" y="80" width="12" height="20" fill="#93c5fd"/>
+            <rect x="1025" y="80" width="12" height="20" fill="#93c5fd"/>
+            
+            <!-- Trees and landscaping -->
+            <circle cx="100" cy="100" r="15" fill="#22c55e"/>
+            <rect x="98" y="100" width="4" height="20" fill="#92400e"/>
+            
+            <circle cx="1100" cy="100" r="15" fill="#22c55e"/>
+            <rect x="1098" y="100" width="4" height="20" fill="#92400e"/>
+            
+            <circle cx="250" cy="110" r="12" fill="#16a34a"/>
+            <rect x="248" y="110" width="4" height="15" fill="#92400e"/>
+            
+            <circle cx="950" cy="110" r="12" fill="#16a34a"/>
+            <rect x="948" y="110" width="4" height="15" fill="#92400e"/>
+            
+            <!-- Road/pathway -->
+            <rect x="0" y="115" width="1200" height="5" fill="#6b7280"/>
+            <rect x="0" y="117" width="1200" height="1" fill="#9ca3af"/>
+            
+            <!-- Clouds -->
+            <ellipse cx="200" cy="25" rx="25" ry="8" fill="white" opacity="0.8"/>
+            <ellipse cx="215" cy="22" rx="20" ry="6" fill="white" opacity="0.8"/>
+            <ellipse cx="800" cy="20" rx="30" ry="10" fill="white" opacity="0.8"/>
+            <ellipse cx="820" cy="18" rx="25" ry="8" fill="white" opacity="0.8"/>
+            
+            <defs>
+                <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+        
+        <!-- Overlay text -->
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center text-blue-900">
+                <h2 class="text-lg font-bold opacity-75">PEMERINTAH KABUPATEN</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <!-- Top Bar -->
+            <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">🏛️</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Sekretariat Daerah</h1>
+                        <p class="text-sm text-gray-600">Kabupaten [Nama Kabupaten]</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-4 text-sm text-gray-600">
+                    <span>📞 (021) 123-4567</span>
+                    <span>✉️ sekda@kabupaten.go.id</span>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="py-4">
+                <ul class="flex flex-wrap items-center space-x-8 text-sm font-medium">
+                    <li><a href="#" onclick="showPage('beranda')" class="nav-link text-blue-600 hover:text-blue-800 transition-colors">BERANDA</a></li>
+                    
+                    <!-- PROFIL Dropdown -->
+                    <li class="dropdown relative">
+                        <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors flex items-center">
+                            PROFIL <span class="ml-1">▼</span>
+                        </a>
+                        <div class="dropdown-menu absolute top-full left-0 bg-white shadow-lg rounded-lg py-2 w-64 mt-1">
+                            <a href="#" onclick="showPage('visi-misi')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Visi Misi</a>
+                            <a href="#" onclick="showPage('tupoksi')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Tupoksi</a>
+                            <a href="#" onclick="showPage('struktur')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Struktur Organisasi</a>
+                            <a href="#" onclick="showPage('asisten')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Asisten Sekda</a>
+                            <a href="#" onclick="showPage('sk-sop')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">SK SOP</a>
+                            <a href="#" onclick="showPage('pejabat')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Daftar Pejabat</a>
+                            <a href="#" onclick="showPage('kontak')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Kontak Kami</a>
+                            <a href="#" onclick="showPage('sippn')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">SIPPN SETDA</a>
+                        </div>
+                    </li>
+
+                    <!-- LAYANAN Dropdown -->
+                    <li class="dropdown relative">
+                        <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors flex items-center">
+                            LAYANAN <span class="ml-1">▼</span>
+                        </a>
+                        <div class="dropdown-menu absolute top-full left-0 bg-white shadow-lg rounded-lg py-2 w-64 mt-1">
+                            <a href="#" onclick="showPage('maklumat')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Maklumat Pelayanan</a>
+                            <a href="#" onclick="showPage('sk-standar')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">SK Standar Pelayanan</a>
+                        </div>
+                    </li>
+
+                    <!-- PPID Dropdown -->
+                    <li class="dropdown relative">
+                        <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors flex items-center">
+                            PPID <span class="ml-1">▼</span>
+                        </a>
+                        <div class="dropdown-menu absolute top-full left-0 bg-white shadow-lg rounded-lg py-2 w-80 mt-1">
+                            <a href="#" onclick="showPage('profil-badan')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Profil Badan Publik</a>
+                            <a href="#" onclick="showPage('profil-pimpinan')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Profil Pimpinan</a>
+                            <a href="#" onclick="showPage('daftar-info')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Daftar Informasi Publik</a>
+                            <a href="#" onclick="showPage('maklumat-info')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Maklumat Pelayanan Informasi</a>
+                            <a href="#" onclick="showPage('standar-pengumuman')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Standar Pengumuman Informasi</a>
+                            <a href="#" onclick="showPage('sop-permohonan')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">SOP Pelayanan Permohonan Informasi</a>
+                            <a href="#" onclick="showPage('info-dikecualikan')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 pl-8">- Informasi Dikecualikan</a>
+                            <a href="#" onclick="showPage('info-berkala')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 pl-8">- Informasi Berkala</a>
+                            <a href="#" onclick="showPage('info-serta-merta')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 pl-8">- Informasi Serta Merta</a>
+                            <a href="#" onclick="showPage('tata-cara-permohonan')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Tata Cara Permohonan Informasi Publik</a>
+                            <a href="#" onclick="showPage('tata-cara-keberatan')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Tata Cara Pengajuan Keberatan</a>
+                            <a href="#" onclick="showPage('form-permohonan')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Form Permohonan Informasi</a>
+                            <a href="#" onclick="showPage('form-keberatan')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Form Pengajuan Keberatan</a>
+                            <a href="#" onclick="showPage('laporan-permohonan')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Laporan Permohonan Informasi Publik</a>
+                            <a href="#" onclick="showPage('penanganan-offline')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Daftar Penanganan Informasi (Offline)</a>
+                            <a href="#" onclick="showPage('penanganan-online')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Daftar Penanganan Informasi (Online)</a>
+                        </div>
+                    </li>
+
+                    <!-- AGENDA PIMPINAN Dropdown -->
+                    <li class="dropdown relative">
+                        <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors flex items-center">
+                            AGENDA PIMPINAN <span class="ml-1">▼</span>
+                        </a>
+                        <div class="dropdown-menu absolute top-full left-0 bg-white shadow-lg rounded-lg py-2 w-64 mt-1">
+                            <a href="#" onclick="showPage('agenda-bupati')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Agenda Bupati</a>
+                            <a href="#" onclick="showPage('agenda-wakil')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Agenda Wakil Bupati</a>
+                            <a href="#" onclick="showPage('agenda-sekda')" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Agenda Sekretaris Daerah</a>
+                        </div>
+                    </li>
+
+                    <!-- DOKUMEN Dropdown -->
+                    <li class="dropdown relative">
+                        <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors flex items-center">
+                            DOKUMEN <span class="ml-1">▼</span>
+                        </a>
+                        <div class="dropdown-menu absolute top-full right-0 bg-white shadow-lg rounded-lg py-2 w-80 mt-1">
+                            <div class="grid grid-cols-2 gap-2 p-2">
+                                <div>
+                                    <a href="#" onclick="showPage('rpjmd')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">RPJMD</a>
+                                    <a href="#" onclick="showPage('renstra')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Renstra</a>
+                                    <a href="#" onclick="showPage('rka')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">RKA</a>
+                                    <a href="#" onclick="showPage('dpa')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">DPA</a>
+                                    <a href="#" onclick="showPage('rencana-kerja')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Rencana Kerja</a>
+                                    <a href="#" onclick="showPage('perjanjian')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Perjanjian Kinerja</a>
+                                    <a href="#" onclick="showPage('lkjip')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">LKjIP</a>
+                                    <a href="#" onclick="showPage('lppd')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">LPPD</a>
+                                </div>
+                                <div>
+                                    <a href="#" onclick="showPage('realisasi')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Laporan Realisasi Anggaran</a>
+                                    <a href="#" onclick="showPage('neraca')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Neraca</a>
+                                    <a href="#" onclick="showPage('skm')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Laporan SKM</a>
+                                    <a href="#" onclick="showPage('sk')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Surat Keputusan</a>
+                                    <a href="#" onclick="showPage('pengumuman')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Pengumuman</a>
+                                    <a href="#" onclick="showPage('e-kliping')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">E-Kliping</a>
+                                    <a href="#" onclick="showPage('kliping-bupati')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Kliping Berita Bupati</a>
+                                    <a href="#" onclick="showPage('kliping-wakil')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Kliping Berita Wakil Bupati</a>
+                                    <a href="#" onclick="showPage('kliping-sekda')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Kliping Berita Sekda</a>
+                                    <a href="#" onclick="showPage('kliping-tapin')" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 rounded">Kliping Berita TAPIN</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div id="breadcrumb" class="breadcrumb py-3" style="display: none;">
+        <div class="container mx-auto px-4">
+            <nav class="text-sm text-gray-600">
+                <a href="#" onclick="showPage('beranda')" class="hover:text-blue-600">Beranda</a>
+                <span class="mx-2">›</span>
+                <span id="breadcrumb-current" class="text-gray-800 font-medium"></span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- BERANDA PAGE -->
+    <div id="page-beranda" class="page-content active">
+        <!-- Hero Section -->
+        <section class="hero-bg text-white py-20">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-5xl font-bold mb-6">Selamat Datang di</h1>
+                <h2 class="text-3xl font-semibold mb-4">Sekretariat Daerah Kabupaten</h2>
+                <p class="text-xl mb-8 max-w-3xl mx-auto">Melayani dengan integritas, transparansi, dan akuntabilitas untuk kemajuan daerah dan kesejahteraan masyarakat</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="showPage('maklumat')" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Layanan Publik</button>
+                    <button onclick="showPage('profil-badan')" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">Informasi PPID</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Access Cards -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Akses Cepat</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card-hover bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl cursor-pointer" onclick="showPage('visi-misi')">
+                        <div class="text-4xl mb-4">📋</div>
+                        <h3 class="text-xl font-semibold mb-2">Profil Instansi</h3>
+                        <p class="text-blue-100 mb-4">Visi, Misi, Tupoksi, dan Struktur Organisasi</p>
+                        <div class="bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-medium inline-block">Lihat Detail</div>
+                    </div>
+
+                    <div class="card-hover bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-xl cursor-pointer" onclick="showPage('maklumat')">
+                        <div class="text-4xl mb-4">🏛️</div>
+                        <h3 class="text-xl font-semibold mb-2">Layanan Publik</h3>
+                        <p class="text-green-100 mb-4">Maklumat dan Standar Pelayanan</p>
+                        <div class="bg-white text-green-600 px-4 py-2 rounded-lg text-sm font-medium inline-block">Akses Layanan</div>
+                    </div>
+
+                    <div class="card-hover bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-xl cursor-pointer" onclick="showPage('form-permohonan')">
+                        <div class="text-4xl mb-4">📊</div>
+                        <h3 class="text-xl font-semibold mb-2">Informasi PPID</h3>
+                        <p class="text-purple-100 mb-4">Permohonan Informasi Publik</p>
+                        <div class="bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-medium inline-block">Form PPID</div>
+                    </div>
+
+                    <div class="card-hover bg-gradient-to-br from-orange-500 to-orange-600 text-white p-6 rounded-xl cursor-pointer" onclick="showPage('agenda-bupati')">
+                        <div class="text-4xl mb-4">📅</div>
+                        <h3 class="text-xl font-semibold mb-2">Agenda Pimpinan</h3>
+                        <p class="text-orange-100 mb-4">Jadwal Kegiatan Pimpinan Daerah</p>
+                        <div class="bg-white text-orange-600 px-4 py-2 rounded-lg text-sm font-medium inline-block">Lihat Agenda</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News & Updates -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800">Berita & Pengumuman</h2>
+                    <button onclick="showPage('pengumuman')" class="text-blue-600 hover:text-blue-800 font-medium">Lihat Semua →</button>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <article class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
+                            <span class="text-white text-6xl">📰</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-sm text-blue-600 font-medium">Pengumuman</span>
+                            <h3 class="text-xl font-semibold text-gray-800 mt-2 mb-3">Pelaksanaan Rapat Koordinasi Bulanan</h3>
+                            <p class="text-gray-600 mb-4">Rapat koordinasi rutin bulan ini akan dilaksanakan pada tanggal 15 dengan agenda pembahasan program kerja...</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">12 Januari 2024</span>
+                                <button class="text-blue-600 hover:text-blue-800 font-medium">Baca Selengkapnya</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="h-48 bg-gradient-to-r from-green-400 to-green-600 flex items-center justify-center">
+                            <span class="text-white text-6xl">📋</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-sm text-green-600 font-medium">Dokumen</span>
+                            <h3 class="text-xl font-semibold text-gray-800 mt-2 mb-3">Publikasi Laporan Kinerja Tahun 2023</h3>
+                            <p class="text-gray-600 mb-4">Laporan Kinerja Instansi Pemerintah (LKjIP) tahun 2023 telah dipublikasikan dan dapat diakses melalui...</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">10 Januari 2024</span>
+                                <button onclick="showPage('lkjip')" class="text-green-600 hover:text-green-800 font-medium">Unduh Dokumen</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="h-48 bg-gradient-to-r from-purple-400 to-purple-600 flex items-center justify-center">
+                            <span class="text-white text-6xl">🎯</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-sm text-purple-600 font-medium">Program</span>
+                            <h3 class="text-xl font-semibold text-gray-800 mt-2 mb-3">Sosialisasi Program Inovasi Daerah</h3>
+                            <p class="text-gray-600 mb-4">Program sosialisasi inovasi daerah akan dilaksanakan di seluruh kecamatan untuk meningkatkan partisipasi...</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">8 Januari 2024</span>
+                                <button class="text-purple-600 hover:text-purple-800 font-medium">Lihat Detail</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Banners -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Galeri Kegiatan</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Banner 1 -->
+                    <div class="relative overflow-hidden rounded-xl shadow-lg card-hover group">
+                        <div class="h-64 bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <div class="text-6xl mb-4">🏛️</div>
+                                <h3 class="text-lg font-semibold">Rapat Koordinasi</h3>
+                                <p class="text-sm text-blue-100">Koordinasi Bulanan OPD</p>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                            <button class="opacity-0 group-hover:opacity-100 bg-white text-gray-800 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">Lihat Detail</button>
+                        </div>
+                    </div>
+
+                    <!-- Banner 2 -->
+                    <div class="relative overflow-hidden rounded-xl shadow-lg card-hover group">
+                        <div class="h-64 bg-gradient-to-br from-green-400 via-green-500 to-green-600 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <div class="text-6xl mb-4">🤝</div>
+                                <h3 class="text-lg font-semibold">Kunjungan Kerja</h3>
+                                <p class="text-sm text-green-100">Dialog dengan Masyarakat</p>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                            <button class="opacity-0 group-hover:opacity-100 bg-white text-gray-800 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">Lihat Detail</button>
+                        </div>
+                    </div>
+
+                    <!-- Banner 3 -->
+                    <div class="relative overflow-hidden rounded-xl shadow-lg card-hover group">
+                        <div class="h-64 bg-gradient-to-br from-purple-400 via-purple-500 to-purple-600 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <div class="text-6xl mb-4">🎖️</div>
+                                <h3 class="text-lg font-semibold">Upacara Resmi</h3>
+                                <p class="text-sm text-purple-100">Pelantikan Pejabat</p>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                            <button class="opacity-0 group-hover:opacity-100 bg-white text-gray-800 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">Lihat Detail</button>
+                        </div>
+                    </div>
+
+                    <!-- Banner 4 -->
+                    <div class="relative overflow-hidden rounded-xl shadow-lg card-hover group">
+                        <div class="h-64 bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <div class="text-6xl mb-4">🏗️</div>
+                                <h3 class="text-lg font-semibold">Pembangunan</h3>
+                                <p class="text-sm text-orange-100">Infrastruktur Daerah</p>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                            <button class="opacity-0 group-hover:opacity-100 bg-white text-gray-800 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">Lihat Detail</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPD Mini Banners -->
+        <section class="py-12 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">OPD Terkait</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Mini Banner 1 - Dinas Pendidikan -->
+                    <div class="relative overflow-hidden rounded-lg shadow-md card-hover group cursor-pointer">
+                        <div class="h-32 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center relative">
+                            <div class="text-center text-white">
+                                <div class="text-3xl mb-2 animate-bounce">📚</div>
+                                <h3 class="text-sm font-semibold">Dinas Pendidikan</h3>
+                            </div>
+                            <!-- Animated elements -->
+                            <div class="absolute top-2 left-2 w-2 h-2 bg-white rounded-full animate-ping"></div>
+                            <div class="absolute bottom-2 right-2 w-1 h-1 bg-yellow-300 rounded-full animate-pulse"></div>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <span class="opacity-0 group-hover:opacity-100 text-white text-xs font-medium transition-all duration-300">Kunjungi Website</span>
+                        </div>
+                    </div>
+
+                    <!-- Mini Banner 2 - Dinas Kesehatan -->
+                    <div class="relative overflow-hidden rounded-lg shadow-md card-hover group cursor-pointer">
+                        <div class="h-32 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center relative">
+                            <div class="text-center text-white">
+                                <div class="text-3xl mb-2 animate-pulse">🏥</div>
+                                <h3 class="text-sm font-semibold">Dinas Kesehatan</h3>
+                            </div>
+                            <!-- Animated elements -->
+                            <div class="absolute top-3 right-3 w-3 h-3 border-2 border-white rounded-full animate-spin"></div>
+                            <div class="absolute bottom-3 left-3 w-1 h-1 bg-red-300 rounded-full animate-bounce"></div>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <span class="opacity-0 group-hover:opacity-100 text-white text-xs font-medium transition-all duration-300">Kunjungi Website</span>
+                        </div>
+                    </div>
+
+                    <!-- Mini Banner 3 - Dinas PU -->
+                    <div class="relative overflow-hidden rounded-lg shadow-md card-hover group cursor-pointer">
+                        <div class="h-32 bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center relative">
+                            <div class="text-center text-white">
+                                <div class="text-3xl mb-2 animate-bounce" style="animation-delay: 0.5s;">🏗️</div>
+                                <h3 class="text-sm font-semibold">Dinas PU & PR</h3>
+                            </div>
+                            <!-- Animated elements -->
+                            <div class="absolute top-2 right-2 w-2 h-2 bg-yellow-300 rounded-full animate-ping" style="animation-delay: 1s;"></div>
+                            <div class="absolute bottom-2 left-2 w-1 h-1 bg-white rounded-full animate-pulse" style="animation-delay: 0.3s;"></div>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <span class="opacity-0 group-hover:opacity-100 text-white text-xs font-medium transition-all duration-300">Kunjungi Website</span>
+                        </div>
+                    </div>
+
+                    <!-- Mini Banner 4 - Dinas Sosial -->
+                    <div class="relative overflow-hidden rounded-lg shadow-md card-hover group cursor-pointer">
+                        <div class="h-32 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center relative">
+                            <div class="text-center text-white">
+                                <div class="text-3xl mb-2 animate-pulse" style="animation-delay: 0.7s;">🤝</div>
+                                <h3 class="text-sm font-semibold">Dinas Sosial</h3>
+                            </div>
+                            <!-- Animated elements -->
+                            <div class="absolute top-3 left-3 w-2 h-2 bg-pink-300 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                            <div class="absolute bottom-3 right-3 w-1 h-1 bg-white rounded-full animate-ping" style="animation-delay: 0.8s;"></div>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <span class="opacity-0 group-hover:opacity-100 text-white text-xs font-medium transition-all duration-300">Kunjungi Website</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics -->
+        <section class="py-16 bg-blue-600 text-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">Statistik Layanan</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="text-4xl font-bold mb-2">1,247</div>
+                        <p class="text-blue-200">Permohonan Informasi</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold mb-2">98%</div>
+                        <p class="text-blue-200">Tingkat Kepuasan</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold mb-2">156</div>
+                        <p class="text-blue-200">Dokumen Publik</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold mb-2">24/7</div>
+                        <p class="text-blue-200">Layanan Online</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- VISI MISI PAGE -->
+    <div id="page-visi-misi" class="page-content">
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Visi & Misi</h1>
+                    <p class="text-xl text-gray-600">Sekretariat Daerah Kabupaten</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Visi -->
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">🎯</span>
+                            </div>
+                            <h2 class="text-3xl font-bold text-blue-800">VISI</h2>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-lg text-gray-700 leading-relaxed italic">
+                                "Terwujudnya Kabupaten yang Maju, Sejahtera, dan Berkelanjutan melalui Tata Kelola Pemerintahan yang Baik, Bersih, dan Melayani"
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Misi -->
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">🚀</span>
+                            </div>
+                            <h2 class="text-3xl font-bold text-green-800">MISI</h2>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">1</span>
+                                <p class="text-gray-700">Meningkatkan kualitas pelayanan publik yang prima dan berorientasi pada kepuasan masyarakat</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">2</span>
+                                <p class="text-gray-700">Mewujudkan tata kelola pemerintahan yang transparan, akuntabel, dan partisipatif</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">3</span>
+                                <p class="text-gray-700">Mengoptimalkan koordinasi dan sinkronisasi program pembangunan daerah</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">4</span>
+                                <p class="text-gray-700">Meningkatkan kapasitas aparatur sipil negara yang profesional dan berintegritas</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Nilai-nilai -->
+                <div class="mt-16">
+                    <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">Nilai-Nilai Organisasi</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+                        <div class="text-center p-6 bg-white rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white font-bold">I</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">INTEGRITAS</h4>
+                            <p class="text-sm text-gray-600">Konsisten dalam pikiran, perkataan, dan perbuatan</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white font-bold">P</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">PROFESIONAL</h4>
+                            <p class="text-sm text-gray-600">Bekerja dengan keahlian dan standar tinggi</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white font-bold">I</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">INOVATIF</h4>
+                            <p class="text-sm text-gray-600">Selalu mencari cara baru untuk meningkatkan kinerja</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white font-bold">K</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">KOLABORATIF</h4>
+                            <p class="text-sm text-gray-600">Bekerja sama untuk mencapai tujuan bersama</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white font-bold">A</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">AKUNTABEL</h4>
+                            <p class="text-sm text-gray-600">Bertanggung jawab atas setiap tindakan dan keputusan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- TUPOKSI PAGE -->
+    <div id="page-tupoksi" class="page-content">
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Tugas Pokok dan Fungsi</h1>
+                    <p class="text-xl text-gray-600">Sekretariat Daerah Kabupaten</p>
+                </div>
+
+                <!-- Tugas Pokok -->
+                <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-8 rounded-xl mb-12">
+                    <h2 class="text-3xl font-bold mb-6 text-center">Tugas Pokok</h2>
+                    <p class="text-lg leading-relaxed text-center max-w-4xl mx-auto">
+                        Sekretariat Daerah mempunyai tugas pokok membantu Bupati dalam penyusunan kebijakan dan koordinasi administratif terhadap pelaksanaan tugas perangkat daerah serta pelayanan administratif.
+                    </p>
+                </div>
+
+                <!-- Fungsi -->
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Fungsi</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div class="flex items-start p-6 bg-gray-50 rounded-xl">
+                                <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 mt-1">1</div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-2">Koordinasi Penyusunan Kebijakan</h3>
+                                    <p class="text-gray-600">Koordinasi penyusunan kebijakan daerah dan pelaksanaan kebijakan daerah</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-6 bg-gray-50 rounded-xl">
+                                <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 mt-1">2</div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-2">Monitoring dan Evaluasi</h3>
+                                    <p class="text-gray-600">Monitoring, evaluasi, dan pelaporan pelaksanaan kebijakan daerah</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-6 bg-gray-50 rounded-xl">
+                                <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 mt-1">3</div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-2">Pembinaan dan Pelayanan</h3>
+                                    <p class="text-gray-600">Pembinaan dan pelayanan administratif terhadap seluruh perangkat daerah</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex items-start p-6 bg-gray-50 rounded-xl">
+                                <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 mt-1">4</div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-2">Pelayanan Administratif</h3>
+                                    <p class="text-gray-600">Pelayanan administratif kepada seluruh perangkat daerah di lingkungan pemerintah daerah</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-6 bg-gray-50 rounded-xl">
+                                <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 mt-1">5</div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-2">Koordinasi dan Fasilitasi</h3>
+                                    <p class="text-gray-600">Koordinasi dan fasilitasi terhadap seluruh perangkat daerah di lingkungan pemerintah daerah</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-6 bg-gray-50 rounded-xl">
+                                <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 mt-1">6</div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-2">Tugas Lainnya</h3>
+                                    <p class="text-gray-600">Pelaksanaan tugas lain yang diberikan oleh Bupati sesuai dengan tugas dan fungsinya</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bidang Kerja -->
+                <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl">
+                    <h2 class="text-3xl font-bold text-center text-green-800 mb-8">Bidang Kerja</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">📋</span>
+                            </div>
+                            <h3 class="font-bold text-gray-800 mb-2">Pemerintahan</h3>
+                            <p class="text-gray-600 text-sm">Koordinasi urusan pemerintahan umum dan otonomi daerah</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">💼</span>
+                            </div>
+                            <h3 class="font-bold text-gray-800 mb-2">Organisasi</h3>
+                            <p class="text-gray-600 text-sm">Pengelolaan organisasi dan tata laksana pemerintahan</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">🏛️</span>
+                            </div>
+                            <h3 class="font-bold text-gray-800 mb-2">Hukum</h3>
+                            <p class="text-gray-600 text-sm">Pembinaan dan pengawasan bidang hukum dan perundang-undangan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FORM PERMOHONAN INFORMASI PAGE -->
+    <div id="page-form-permohonan" class="page-content">
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Form Permohonan Informasi Publik</h1>
+                    <p class="text-xl text-gray-600">Ajukan permohonan informasi publik sesuai dengan UU No. 14 Tahun 2008</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <form id="formPermohonanInfo" class="space-y-6">
+                        <!-- Data Pemohon -->
+                        <div class="border-b border-gray-200 pb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-6">Data Pemohon</h2>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
+                                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Masukkan nama lengkap">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">NIK *</label>
+                                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Nomor Induk Kependudukan">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                                    <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="alamat@email.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">No. Telepon *</label>
+                                    <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="08xxxxxxxxxx">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap *</label>
+                                    <textarea required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="3" placeholder="Alamat lengkap pemohon"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Pekerjaan</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Pekerjaan saat ini">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Kategori Pemohon *</label>
+                                    <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option value="">Pilih kategori</option>
+                                        <option value="perorangan">Perorangan</option>
+                                        <option value="kelompok">Kelompok Orang</option>
+                                        <option value="badan-hukum">Badan Hukum</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Informasi yang Diminta -->
+                        <div class="border-b border-gray-200 pb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-6">Informasi yang Diminta</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Rincian Informasi yang Dibutuhkan *</label>
+                                    <textarea required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="4" placeholder="Jelaskan secara detail informasi yang Anda butuhkan"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tujuan Penggunaan Informasi *</label>
+                                    <textarea required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="3" placeholder="Jelaskan tujuan penggunaan informasi yang diminta"></textarea>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Cara Memperoleh Informasi *</label>
+                                        <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option value="">Pilih cara</option>
+                                            <option value="melihat">Melihat/Membaca/Mendengarkan/Mencatat</option>
+                                            <option value="salinan">Mendapatkan Salinan Informasi (Hardcopy/Softcopy)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Cara Mendapatkan Salinan *</label>
+                                        <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option value="">Pilih cara</option>
+                                            <option value="langsung">Mengambil Langsung</option>
+                                            <option value="kurir">Kurir</option>
+                                            <option value="pos">Pos</option>
+                                            <option value="faksimili">Faksimili</option>
+                                            <option value="email">Email</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Upload Dokumen -->
+                        <div class="border-b border-gray-200 pb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-6">Dokumen Pendukung</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Fotokopi KTP *</label>
+                                    <input type="file" accept=".pdf,.jpg,.jpeg,.png" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <p class="text-sm text-gray-500 mt-1">Format: PDF, JPG, PNG (Maks. 2MB)</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Dokumen Pendukung Lainnya</label>
+                                    <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <p class="text-sm text-gray-500 mt-1">Format: PDF, JPG, PNG, DOC, DOCX (Maks. 5MB)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pernyataan -->
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                            <h3 class="font-bold text-gray-800 mb-4">Pernyataan Pemohon</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-start">
+                                    <input type="checkbox" required class="mt-1 mr-3">
+                                    <span class="text-sm text-gray-700">Saya menyatakan bahwa informasi yang saya berikan adalah benar dan dapat dipertanggungjawabkan secara hukum.</span>
+                                </label>
+                                <label class="flex items-start">
+                                    <input type="checkbox" required class="mt-1 mr-3">
+                                    <span class="text-sm text-gray-700">Saya memahami bahwa informasi yang diminta akan digunakan sesuai dengan tujuan yang telah saya nyatakan.</span>
+                                </label>
+                                <label class="flex items-start">
+                                    <input type="checkbox" required class="mt-1 mr-3">
+                                    <span class="text-sm text-gray-700">Saya bersedia memenuhi kewajiban pembayaran biaya penggandaan/pengiriman jika diperlukan.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="flex justify-end space-x-4 pt-6">
+                            <button type="button" onclick="showPage('beranda')" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">Batal</button>
+                            <button type="submit" class="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">Kirim Permohonan</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Informasi Tambahan -->
+                <div class="mt-12 grid md:grid-cols-2 gap-8">
+                    <div class="bg-blue-50 p-6 rounded-xl">
+                        <h3 class="font-bold text-blue-800 mb-4">📋 Ketentuan Permohonan</h3>
+                        <ul class="text-sm text-blue-700 space-y-2">
+                            <li>• Permohonan akan diproses maksimal 10 hari kerja</li>
+                            <li>• Informasi yang dikecualikan tidak dapat diberikan</li>
+                            <li>• Pemohon dapat mengajukan keberatan jika ditolak</li>
+                            <li>• Biaya penggandaan sesuai dengan tarif yang berlaku</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-xl">
+                        <h3 class="font-bold text-green-800 mb-4">📞 Bantuan</h3>
+                        <div class="text-sm text-green-700 space-y-2">
+                            <p><strong>PPID Pelaksana:</strong></p>
+                            <p>📞 (021) 123-4567 ext. 101</p>
+                            <p>✉️ ppid@kabupaten.go.id</p>
+                            <p>🕒 Senin-Jumat: 08:00-16:00 WIB</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- AGENDA BUPATI PAGE -->
+    <div id="page-agenda-bupati" class="page-content">
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Agenda Bupati</h1>
+                    <p class="text-xl text-gray-600">Jadwal Kegiatan dan Agenda Resmi Bupati</p>
+                </div>
+
+                <!-- Filter dan Search -->
+                <div class="bg-gray-50 p-6 rounded-xl mb-8">
+                    <div class="flex flex-wrap gap-4 items-center justify-between">
+                        <div class="flex flex-wrap gap-4">
+                            <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option>Semua Bulan</option>
+                                <option>Januari 2024</option>
+                                <option>Februari 2024</option>
+                                <option>Maret 2024</option>
+                            </select>
+                            <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option>Semua Kategori</option>
+                                <option>Rapat</option>
+                                <option>Kunjungan</option>
+                                <option>Acara Resmi</option>
+                                <option>Sidak</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" placeholder="Cari agenda..." class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">🔍</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar View Toggle -->
+                <div class="flex justify-center mb-8">
+                    <div class="bg-white rounded-lg shadow-md p-1 flex">
+                        <button class="px-6 py-2 bg-blue-600 text-white rounded-md font-medium">📅 List View</button>
+                        <button class="px-6 py-2 text-gray-600 hover:bg-gray-100 rounded-md font-medium">📊 Calendar View</button>
+                    </div>
+                </div>
+
+                <!-- Agenda List -->
+                <div class="space-y-6">
+                    <!-- Agenda Item 1 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="flex">
+                            <div class="bg-blue-600 text-white p-6 text-center min-w-[120px]">
+                                <div class="text-2xl font-bold">15</div>
+                                <div class="text-sm">JAN 2024</div>
+                                <div class="text-xs mt-1">SENIN</div>
+                            </div>
+                            <div class="flex-1 p-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Rapat</span>
+                                        <h3 class="text-xl font-bold text-gray-800 mt-2">Rapat Koordinasi Bulanan dengan Kepala OPD</h3>
+                                    </div>
+                                    <div class="text-right text-sm text-gray-600">
+                                        <div>🕘 09:00 - 12:00 WIB</div>
+                                        <div>📍 Ruang Rapat Utama</div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">Pembahasan evaluasi kinerja OPD tahun 2023 dan rencana program kerja tahun 2024. Agenda meliputi presentasi capaian target, kendala yang dihadapi, dan strategi peningkatan kinerja.</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span>👥 25 Peserta</span>
+                                        <span>📋 Agenda Rutin</span>
+                                    </div>
+                                    <button class="text-blue-600 hover:text-blue-800 font-medium">Lihat Detail →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agenda Item 2 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="flex">
+                            <div class="bg-green-600 text-white p-6 text-center min-w-[120px]">
+                                <div class="text-2xl font-bold">16</div>
+                                <div class="text-sm">JAN 2024</div>
+                                <div class="text-xs mt-1">SELASA</div>
+                            </div>
+                            <div class="flex-1 p-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Kunjungan</span>
+                                        <h3 class="text-xl font-bold text-gray-800 mt-2">Kunjungan Kerja ke Kecamatan Selatan</h3>
+                                    </div>
+                                    <div class="text-right text-sm text-gray-600">
+                                        <div>🕘 08:00 - 16:00 WIB</div>
+                                        <div>📍 Kecamatan Selatan</div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">Monitoring pelaksanaan program pembangunan infrastruktur dan dialog dengan masyarakat. Kunjungan meliputi peninjauan proyek jalan, fasilitas kesehatan, dan pendidikan.</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span>🚗 Kunjungan Lapangan</span>
+                                        <span>👥 Dialog Publik</span>
+                                    </div>
+                                    <button class="text-green-600 hover:text-green-800 font-medium">Lihat Detail →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agenda Item 3 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="flex">
+                            <div class="bg-purple-600 text-white p-6 text-center min-w-[120px]">
+                                <div class="text-2xl font-bold">18</div>
+                                <div class="text-sm">JAN 2024</div>
+                                <div class="text-xs mt-1">KAMIS</div>
+                            </div>
+                            <div class="flex-1 p-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Acara Resmi</span>
+                                        <h3 class="text-xl font-bold text-gray-800 mt-2">Pelantikan Pejabat Eselon III dan IV</h3>
+                                    </div>
+                                    <div class="text-right text-sm text-gray-600">
+                                        <div>🕘 10:00 - 12:00 WIB</div>
+                                        <div>📍 Aula Utama Pemkab</div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">Upacara pelantikan dan pengambilan sumpah jabatan untuk 15 pejabat struktural yang baru diangkat. Acara dihadiri oleh seluruh pimpinan OPD dan undangan terbatas.</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span>👔 15 Pejabat</span>
+                                        <span>🎖️ Upacara Resmi</span>
+                                    </div>
+                                    <button class="text-purple-600 hover:text-purple-800 font-medium">Lihat Detail →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agenda Item 4 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="flex">
+                            <div class="bg-orange-600 text-white p-6 text-center min-w-[120px]">
+                                <div class="text-2xl font-bold">20</div>
+                                <div class="text-sm">JAN 2024</div>
+                                <div class="text-xs mt-1">SABTU</div>
+                            </div>
+                            <div class="flex-1 p-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">Sidak</span>
+                                        <h3 class="text-xl font-bold text-gray-800 mt-2">Sidak Pelayanan Publik di Puskesmas</h3>
+                                    </div>
+                                    <div class="text-right text-sm text-gray-600">
+                                        <div>🕘 09:00 - 14:00 WIB</div>
+                                        <div>📍 Puskesmas se-Kabupaten</div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">Inspeksi mendadak untuk mengevaluasi kualitas pelayanan kesehatan dan ketersediaan fasilitas medis. Kunjungan ke 5 puskesmas dengan fokus pada waktu tunggu dan kepuasan pasien.</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span>🏥 5 Puskesmas</span>
+                                        <span>📊 Evaluasi Layanan</span>
+                                    </div>
+                                    <button class="text-orange-600 hover:text-orange-800 font-medium">Lihat Detail →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Load More -->
+                <div class="text-center mt-12">
+                    <button class="px-8 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium">Muat Lebih Banyak</button>
+                </div>
+
+                <!-- Statistik Agenda -->
+                <div class="mt-16 grid md:grid-cols-4 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-xl text-center">
+                        <div class="text-3xl font-bold text-blue-600 mb-2">24</div>
+                        <p class="text-blue-800 font-medium">Agenda Bulan Ini</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-xl text-center">
+                        <div class="text-3xl font-bold text-green-600 mb-2">8</div>
+                        <p class="text-green-800 font-medium">Kunjungan Kerja</p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-xl text-center">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">12</div>
+                        <p class="text-purple-800 font-medium">Rapat Koordinasi</p>
+                    </div>
+                    <div class="bg-orange-50 p-6 rounded-xl text-center">
+                        <div class="text-3xl font-bold text-orange-600 mb-2">4</div>
+                        <p class="text-orange-800 font-medium">Acara Resmi</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- RPJMD PAGE -->
+    <div id="page-rpjmd" class="page-content">
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Rencana Pembangunan Jangka Menengah Daerah</h1>
+                    <p class="text-xl text-gray-600">RPJMD Kabupaten Periode 2021-2026</p>
+                </div>
+
+                <!-- Overview RPJMD -->
+                <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-8 rounded-xl mb-12">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h2 class="text-3xl font-bold mb-4">RPJMD 2021-2026</h2>
+                            <p class="text-lg mb-6">Dokumen perencanaan pembangunan daerah untuk periode 5 tahun yang memuat visi, misi, program, dan kegiatan pembangunan daerah.</p>
+                            <div class="flex space-x-4">
+                                <button class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">📄 Unduh PDF</button>
+                                <button class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">📊 Lihat Ringkasan</button>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-white bg-opacity-20 rounded-xl p-6">
+                                <div class="text-4xl mb-4">📋</div>
+                                <div class="text-2xl font-bold">5 Tahun</div>
+                                <div class="text-blue-200">Periode Perencanaan</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visi Misi RPJMD -->
+                <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl">
+                        <h3 class="text-2xl font-bold text-green-800 mb-6 text-center">Visi RPJMD</h3>
+                        <div class="text-center">
+                            <p class="text-lg text-gray-700 leading-relaxed italic">
+                                "Terwujudnya Kabupaten yang Maju, Sejahtera, Berkelanjutan, dan Berdaya Saing pada Tahun 2026"
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl">
+                        <h3 class="text-2xl font-bold text-blue-800 mb-6 text-center">Misi RPJMD</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">1</span>
+                                <p class="text-gray-700">Meningkatkan kualitas SDM dan pelayanan dasar</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">2</span>
+                                <p class="text-gray-700">Mengembangkan ekonomi daerah yang berkelanjutan</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">3</span>
+                                <p class="text-gray-700">Memperkuat infrastruktur dan konektivitas</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Program Prioritas -->
+                <div class="mb-12">
+                    <h3 class="text-3xl font-bold text-center text-gray-800 mb-8">Program Prioritas</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">🏥</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 text-center mb-3">Kesehatan</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Peningkatan fasilitas kesehatan</li>
+                                <li>• Program stunting</li>
+                                <li>• Jaminan kesehatan universal</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">🎓</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 text-center mb-3">Pendidikan</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Wajib belajar 12 tahun</li>
+                                <li>• Digitalisasi sekolah</li>
+                                <li>• Beasiswa untuk siswa berprestasi</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">🛣️</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 text-center mb-3">Infrastruktur</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Pembangunan jalan dan jembatan</li>
+                                <li>• Jaringan air bersih</li>
+                                <li>• Konektivitas digital</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">💼</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 text-center mb-3">Ekonomi</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Pengembangan UMKM</li>
+                                <li>• Pariwisata berkelanjutan</li>
+                                <li>• Investasi daerah</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">🌱</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 text-center mb-3">Lingkungan</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Pengelolaan sampah terpadu</li>
+                                <li>• Konservasi hutan</li>
+                                <li>• Energi terbarukan</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-16 h-16 bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-white text-2xl">🏛️</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 text-center mb-3">Tata Kelola</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Reformasi birokrasi</li>
+                                <li>• Pelayanan digital</li>
+                                <li>• Transparansi anggaran</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Target dan Indikator -->
+                <div class="bg-gray-50 p-8 rounded-xl mb-12">
+                    <h3 class="text-3xl font-bold text-center text-gray-800 mb-8">Target Utama 2026</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-blue-600 mb-2">85%</div>
+                            <p class="text-gray-700">Indeks Pembangunan Manusia</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-green-600 mb-2">7.5%</div>
+                            <p class="text-gray-700">Pertumbuhan Ekonomi</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-purple-600 mb-2">5%</div>
+                            <p class="text-gray-700">Tingkat Kemiskinan</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-orange-600 mb-2">90%</div>
+                            <p class="text-gray-700">Kepuasan Pelayanan Publik</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dokumen Terkait -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Dokumen Terkait</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                                    <span class="text-red-600 text-xl">📄</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">RPJMD Lengkap</h4>
+                                    <p class="text-sm text-gray-600">PDF • 15.2 MB</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Dokumen lengkap RPJMD 2021-2026 dengan seluruh program dan kegiatan pembangunan daerah.</p>
+                            <button class="w-full bg-red-50 text-red-600 py-2 rounded-lg hover:bg-red-100 transition-colors">Unduh Dokumen</button>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                    <span class="text-blue-600 text-xl">📊</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Ringkasan Eksekutif</h4>
+                                    <p class="text-sm text-gray-600">PDF • 2.8 MB</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Ringkasan eksekutif RPJMD yang berisi poin-poin utama dan target pembangunan daerah.</p>
+                            <button class="w-full bg-blue-50 text-blue-600 py-2 rounded-lg hover:bg-blue-100 transition-colors">Unduh Ringkasan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Kontak Kami</h3>
+                    <div class="space-y-2 text-gray-300">
+                        <p>📍 Jl. Pemerintahan No. 1</p>
+                        <p>Kabupaten [Nama Kabupaten]</p>
+                        <p>📞 (021) 123-4567</p>
+                        <p>✉️ sekda@kabupaten.go.id</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Layanan</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" onclick="showPage('profil-badan')" class="hover:text-white transition-colors">Informasi Publik</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pengaduan Masyarakat</a></li>
+                        <li><a href="#" onclick="showPage('kontak')" class="hover:text-white transition-colors">Konsultasi</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Perizinan</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Dokumen</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" onclick="showPage('rpjmd')" class="hover:text-white transition-colors">RPJMD</a></li>
+                        <li><a href="#" onclick="showPage('renstra')" class="hover:text-white transition-colors">Renstra</a></li>
+                        <li><a href="#" onclick="showPage('lkjip')" class="hover:text-white transition-colors">LKjIP</a></li>
+                        <li><a href="#" onclick="showPage('lppd')" class="hover:text-white transition-colors">LPPD</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Media Sosial</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">📘</a>
+                        <a href="#" class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">🐦</a>
+                        <a href="#" class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">📺</a>
+                        <a href="#" class="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors">📷</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Sekretariat Daerah Kabupaten. Semua hak dilindungi undang-undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page navigation system
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                
+                // Update breadcrumb
+                updateBreadcrumb(pageId);
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+                
+                // Update navigation active state
+                updateNavigation(pageId);
+            }
+        }
+
+        function updateBreadcrumb(pageId) {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const breadcrumbCurrent = document.getElementById('breadcrumb-current');
+            
+            const pageNames = {
+                'beranda': 'Beranda',
+                'visi-misi': 'Visi Misi',
+                'tupoksi': 'Tupoksi',
+                'struktur': 'Struktur Organisasi',
+                'asisten': 'Asisten Sekda',
+                'sk-sop': 'SK SOP',
+                'pejabat': 'Daftar Pejabat',
+                'kontak': 'Kontak Kami',
+                'sippn': 'SIPPN SETDA',
+                'maklumat': 'Maklumat Pelayanan',
+                'sk-standar': 'SK Standar Pelayanan',
+                'profil-badan': 'Profil Badan Publik',
+                'profil-pimpinan': 'Profil Pimpinan',
+                'daftar-info': 'Daftar Informasi Publik',
+                'maklumat-info': 'Maklumat Pelayanan Informasi',
+                'standar-pengumuman': 'Standar Pengumuman Informasi',
+                'sop-permohonan': 'SOP Pelayanan Permohonan Informasi',
+                'info-dikecualikan': 'Informasi Dikecualikan',
+                'info-berkala': 'Informasi Berkala',
+                'info-serta-merta': 'Informasi Serta Merta',
+                'tata-cara-permohonan': 'Tata Cara Permohonan Informasi Publik',
+                'tata-cara-keberatan': 'Tata Cara Pengajuan Keberatan',
+                'form-permohonan': 'Form Permohonan Informasi',
+                'form-keberatan': 'Form Pengajuan Keberatan',
+                'laporan-permohonan': 'Laporan Permohonan Informasi Publik',
+                'penanganan-offline': 'Daftar Penanganan Informasi (Offline)',
+                'penanganan-online': 'Daftar Penanganan Informasi (Online)',
+                'agenda-bupati': 'Agenda Bupati',
+                'agenda-wakil': 'Agenda Wakil Bupati',
+                'agenda-sekda': 'Agenda Sekretaris Daerah',
+                'rpjmd': 'RPJMD',
+                'renstra': 'Renstra',
+                'rka': 'RKA',
+                'dpa': 'DPA',
+                'rencana-kerja': 'Rencana Kerja',
+                'perjanjian': 'Perjanjian Kinerja',
+                'lkjip': 'LKjIP',
+                'lppd': 'LPPD',
+                'realisasi': 'Laporan Realisasi Anggaran',
+                'neraca': 'Neraca',
+                'skm': 'Laporan SKM',
+                'sk': 'Surat Keputusan',
+                'pengumuman': 'Pengumuman',
+                'e-kliping': 'E-Kliping',
+                'kliping-bupati': 'Kliping Berita Bupati',
+                'kliping-wakil': 'Kliping Berita Wakil Bupati',
+                'kliping-sekda': 'Kliping Berita Sekda',
+                'kliping-tapin': 'Kliping Berita TAPIN'
+            };
+
+            if (pageId === 'beranda') {
+                breadcrumb.style.display = 'none';
+            } else {
+                breadcrumb.style.display = 'block';
+                breadcrumbCurrent.textContent = pageNames[pageId] || pageId;
+            }
+        }
+
+        function updateNavigation(pageId) {
+            // Remove active class from all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600');
+                link.classList.add('text-gray-700');
+            });
+
+            // Add active class to current page if it's beranda
+            if (pageId === 'beranda') {
+                const berandaLink = document.querySelector('a[onclick="showPage(\'beranda\')"]');
+                if (berandaLink) {
+                    berandaLink.classList.remove('text-gray-700');
+                    berandaLink.classList.add('text-blue-600');
+                }
+            }
+        }
+
+        // Form submission handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('formPermohonanInfo');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Show success message
+                    alert('Permohonan informasi Anda telah berhasil dikirim! Kami akan memproses permohonan Anda dalam waktu maksimal 10 hari kerja. Nomor registrasi: REG-' + Date.now());
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Redirect to beranda
+                    showPage('beranda');
+                });
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('beranda');
+        });
+
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(e) {
+            if (e.state && e.state.page) {
+                showPage(e.state.page);
+            }
+        });
+
+        // Add pages to browser history
+        function showPageWithHistory(pageId) {
+            showPage(pageId);
+            history.pushState({page: pageId}, '', '#' + pageId);
+        }
+
+        // Create placeholder pages for remaining menu items
+        const remainingPages = [
+            'struktur', 'asisten', 'sk-sop', 'pejabat', 'kontak', 'sippn',
+            'maklumat', 'sk-standar', 'profil-badan', 'profil-pimpinan',
+            'daftar-info', 'maklumat-info', 'standar-pengumuman', 'sop-permohonan',
+            'info-dikecualikan', 'info-berkala', 'info-serta-merta',
+            'tata-cara-permohonan', 'tata-cara-keberatan', 'form-keberatan',
+            'laporan-permohonan', 'penanganan-offline', 'penanganan-online',
+            'agenda-wakil', 'agenda-sekda', 'renstra', 'rka', 'dpa',
+            'rencana-kerja', 'perjanjian', 'lkjip', 'lppd', 'realisasi',
+            'neraca', 'skm', 'sk', 'pengumuman', 'e-kliping',
+            'kliping-bupati', 'kliping-wakil', 'kliping-sekda', 'kliping-tapin'
+        ];
+
+        // Create placeholder content for remaining pages
+        remainingPages.forEach(pageId => {
+            if (!document.getElementById('page-' + pageId)) {
+                const pageDiv = document.createElement('div');
+                pageDiv.id = 'page-' + pageId;
+                pageDiv.className = 'page-content';
+                
+                const pageNames = {
+                    'struktur': 'Struktur Organisasi',
+                    'asisten': 'Asisten Sekda',
+                    'sk-sop': 'SK SOP',
+                    'pejabat': 'Daftar Pejabat',
+                    'kontak': 'Kontak Kami',
+                    'sippn': 'SIPPN SETDA',
+                    'maklumat': 'Maklumat Pelayanan',
+                    'sk-standar': 'SK Standar Pelayanan',
+                    'profil-badan': 'Profil Badan Publik',
+                    'profil-pimpinan': 'Profil Pimpinan',
+                    'daftar-info': 'Daftar Informasi Publik',
+                    'maklumat-info': 'Maklumat Pelayanan Informasi',
+                    'standar-pengumuman': 'Standar Pengumuman Informasi',
+                    'sop-permohonan': 'SOP Pelayanan Permohonan Informasi',
+                    'info-dikecualikan': 'Informasi Dikecualikan',
+                    'info-berkala': 'Informasi Berkala',
+                    'info-serta-merta': 'Informasi Serta Merta',
+                    'tata-cara-permohonan': 'Tata Cara Permohonan Informasi Publik',
+                    'tata-cara-keberatan': 'Tata Cara Pengajuan Keberatan',
+                    'form-keberatan': 'Form Pengajuan Keberatan',
+                    'laporan-permohonan': 'Laporan Permohonan Informasi Publik',
+                    'penanganan-offline': 'Daftar Penanganan Informasi (Offline)',
+                    'penanganan-online': 'Daftar Penanganan Informasi (Online)',
+                    'agenda-wakil': 'Agenda Wakil Bupati',
+                    'agenda-sekda': 'Agenda Sekretaris Daerah',
+                    'renstra': 'Renstra',
+                    'rka': 'RKA',
+                    'dpa': 'DPA',
+                    'rencana-kerja': 'Rencana Kerja',
+                    'perjanjian': 'Perjanjian Kinerja',
+                    'lkjip': 'LKjIP',
+                    'lppd': 'LPPD',
+                    'realisasi': 'Laporan Realisasi Anggaran',
+                    'neraca': 'Neraca',
+                    'skm': 'Laporan SKM',
+                    'sk': 'Surat Keputusan',
+                    'pengumuman': 'Pengumuman',
+                    'e-kliping': 'E-Kliping',
+                    'kliping-bupati': 'Kliping Berita Bupati',
+                    'kliping-wakil': 'Kliping Berita Wakil Bupati',
+                    'kliping-sekda': 'Kliping Berita Sekda',
+                    'kliping-tapin': 'Kliping Berita TAPIN'
+                };
+
+                pageDiv.innerHTML = `
+                    <section class="py-16 bg-white">
+                        <div class="container mx-auto px-4">
+                            <div class="text-center mb-12">
+                                <h1 class="text-4xl font-bold text-gray-800 mb-4">${pageNames[pageId] || pageId}</h1>
+                                <p class="text-xl text-gray-600">Halaman ini sedang dalam pengembangan</p>
+                            </div>
+                            <div class="max-w-2xl mx-auto text-center">
+                                <div class="bg-blue-50 border border-blue-200 rounded-xl p-8">
+                                    <div class="text-6xl mb-6">🚧</div>
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Sedang Dikembangkan</h2>
+                                    <p class="text-gray-600 mb-6">Konten untuk halaman ${pageNames[pageId] || pageId} sedang dalam proses pengembangan. Silakan kembali lagi nanti atau hubungi kami untuk informasi lebih lanjut.</p>
+                                    <button onclick="showPage('beranda')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">Kembali ke Beranda</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+                
+                document.body.insertBefore(pageDiv, document.querySelector('footer'));
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985ef521a0619aaf',t:'MTc1OTAxNzU5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
